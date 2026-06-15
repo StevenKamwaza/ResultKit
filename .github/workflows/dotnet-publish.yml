@@ -1,10 +1,9 @@
-
 name: Publish NuGet Package
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - master
 
 jobs:
   deploy:
@@ -13,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -28,10 +29,19 @@ jobs:
       - name: Run Unit Tests
         run: dotnet test Tests/Tests.csproj --configuration Release --no-build --verbosity normal
 
-      - name: Extract Version From Tag
+      #GET TAG IF EXISTS ON THIS COMMIT
+      - name: Get Version From Tag (fallback supported)
         run: |
-          VERSION="${{ github.ref_name }}"
-          VERSION="${VERSION#v}"
+          TAG=$(git tag --points-at HEAD)
+
+          if [ -z "$TAG" ]; then
+            VERSION="10.0.${{ github.run_number }}"
+            echo "No tag found. Using fallback version: $VERSION"
+          else
+            VERSION="${TAG#v}"
+            echo "Tag found: $TAG → VERSION=$VERSION"
+          fi
+
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Pack ResultKit
@@ -46,4 +56,8 @@ jobs:
         run: ls -lah ./nupkg
 
       - name: Publish To NuGet
-        run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: |
+          dotnet nuget push "./nupkg/*.nupkg" \
+            --api-key "${{ secrets.NUGET_API_KEY }}" \
+            --source "https://api.nuget.org/v3/index.json" \
+            --skip-duplicate
