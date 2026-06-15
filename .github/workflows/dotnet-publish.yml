@@ -1,39 +1,3 @@
-# name: Publish NuGet Package
-
-# on:
-#   push:
-#     tags:
-#       - 'v*' # Triggers the workflow on push a version tag (e.g., v1.0.0)
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#     - name: Checkout Source Code
-#       uses: actions/checkout@v4
-
-#     - name: Setup .NET Core
-#       uses: actions/setup-dotnet@v4
-#       with:
-#         dotnet-version: '10.0.x' # .NET version
-
-#     - name: Install Dependencies
-#       run: dotnet restore
-
-#     - name: Build Project
-#       run: dotnet build --configuration Release --no-restore
-
-#     - name: Pack Project
-#       # Extracts the version number directly from the Git tag (strips the 'v' prefix)
-#       run: |
-#         VERSION="${{ github.ref_name }}"
-#         VERSION="${VERSION#v}"
-#         dotnet pack --configuration Release --no-build --output ./nupkg -p:PackageVersion="$VERSION"
-
-#     - name: Publish to NuGet
-#       run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
-
 name: Publish NuGet Package
 
 on:
