@@ -3,7 +3,6 @@
 	<PropertyGroup>
 		<Version>10.0</Version>
 		<Authors>Steven Kamwaza</Authors>
-		<Company>Steven Kamwaza</Company>
 		<PackageId>ResultKit</PackageId>
 		<Title>ResultKit</Title>
 		<Description>
