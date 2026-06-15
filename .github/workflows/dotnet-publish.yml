@@ -37,54 +37,52 @@
 name: Publish NuGet Package
 
 on:
-push:
-tags:
-- 'v*'
+  push:
+    tags:
+      - 'v*'
 
 jobs:
-deploy:
-runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest
 
-```
-steps:
-  - name: Checkout Source Code
-    uses: actions/checkout@v4
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
 
-  - name: Setup .NET
-    uses: actions/setup-dotnet@v4
-    with:
-      dotnet-version: '10.0.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
 
-  - name: Restore Dependencies
-    run: dotnet restore ResultKit.slnx
+      - name: Restore Dependencies
+        run: dotnet restore ResultKit.slnx
 
-  - name: Build Solution
-    run: dotnet build ResultKit.slnx --configuration Release --no-restore
+      - name: Build Solution
+        run: dotnet build ResultKit.slnx --configuration Release --no-restore
 
-  - name: Run Unit Tests
-    run: dotnet test Tests/Tests.csproj --configuration Release --no-build --verbosity normal
+      - name: Run Unit Tests
+        run: dotnet test Tests/Tests.csproj --configuration Release --no-build --verbosity normal
 
-  - name: Extract Version From Tag
-    run: |
-      VERSION="${{ github.ref_name }}"
-      VERSION="${VERSION#v}"
-      echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Extract Version From Tag
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION#v}"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-  - name: Pack ResultKit
-    run: |
-      dotnet pack ResultKit/ResultKit.csproj \
-        --configuration Release \
-        --no-build \
-        --output ./nupkg \
-        -p:PackageVersion=${{ env.VERSION }}
+      - name: Pack ResultKit
+        run: |
+          dotnet pack ResultKit/ResultKit.csproj \
+            --configuration Release \
+            --no-build \
+            --output ./nupkg \
+            -p:PackageVersion=${{ env.VERSION }}
 
-  - name: Verify Package
-    run: ls -lah ./nupkg
+      - name: Verify Package
+        run: ls -lah ./nupkg
 
-  - name: Publish To NuGet
-    run: |
-      dotnet nuget push "./nupkg/*.nupkg" \
-        --api-key "${{ secrets.NUGET_API_KEY }}" \
-        --source "https://api.nuget.org/v3/index.json" \
-        --skip-duplicate
-
+      - name: Publish To NuGet
+        run: |
+          dotnet nuget push "./nupkg/*.nupkg" \
+            --api-key "${{ secrets.NUGET_API_KEY }}" \
+            --source "https://api.nuget.org/v3/index.json" \
+            --skip-duplicate
