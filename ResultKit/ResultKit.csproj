@@ -1,6 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<Version>10.0</Version>
+		<Authors>Steven Kamwaza</Authors>
+		<Company>Steven Kamwaza</Company>
+		<PackageId>ResultKit</PackageId>
+		<Title>ResultKit</Title>
+		<Description>
+			ResultKit is a modern Result Pattern library for .NET that eliminates exception-driven control flow by providing explicit Success and Failure outcomes. Build cleaner, safer, and more maintainable applications with support for validation errors, domain errors, HTTP responses, CQRS, Clean Architecture, and ASP.NET Core.
+		</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/StevenKamwaza/ResultKit</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/StevenKamwaza/ResultKit</PackageProjectUrl>
+		<PackageTags>
+			result-pattern;result;error-handling;aspnetcore;dotnet;clean-architecture;cqrs;minimal-api;validation;functional-programming;domain-driven-design;ddd;mediatr
+		</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageReleaseNotes>
+			Initial release of ResultKit. Provides strongly typed Result and Result&lt;T&gt; patterns, validation support, error handling, and ASP.NET Core integration helpers.
+		</PackageReleaseNotes>
+	</PropertyGroup>
+	
+	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
