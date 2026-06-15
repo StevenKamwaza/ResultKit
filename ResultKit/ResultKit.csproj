@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<Version>10.0</Version>
 		<Authors>Steven Kamwaza</Authors>
-		<PackageId>ResultKit</PackageId>
+		<PackageId>SK.ResultKit</PackageId>
 		<Title>ResultKit</Title>
 		<Description>
 			ResultKit is a modern Result Pattern library for .NET that eliminates exception-driven control flow by providing explicit Success and Failure outcomes. Build cleaner, safer, and more maintainable applications with support for validation errors, domain errors, HTTP responses, CQRS, Clean Architecture, and ASP.NET Core.
