@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -27,33 +25,10 @@ jobs:
         run: dotnet build ResultKit.slnx --configuration Release --no-restore
 
       - name: Run Unit Tests
-        run: dotnet test Tests/Tests.csproj --configuration Release --no-build --verbosity normal
-
-      #GET TAG IF EXISTS ON THIS COMMIT
-      - name: Get Version From Tag (fallback supported)
-        run: |
-          TAG=$(git tag --points-at HEAD)
-
-          if [ -z "$TAG" ]; then
-            VERSION="10.0.${{ github.run_number }}"
-            echo "No tag found. Using fallback version: $VERSION"
-          else
-            VERSION="${TAG#v}"
-            echo "Tag found: $TAG → VERSION=$VERSION"
-          fi
-
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+        run: dotnet test Tests/Tests.csproj --configuration Release --no-build
 
       - name: Pack ResultKit
-        run: |
-          dotnet pack ResultKit/ResultKit.csproj \
-            --configuration Release \
-            --no-build \
-            --output ./nupkg \
-            -p:PackageVersion=${{ env.VERSION }}
-
-      - name: Verify Package
-        run: ls -lah ./nupkg
+        run: dotnet pack ResultKit/ResultKit.csproj --configuration Release --no-build --output ./nupkg
 
       - name: Publish To NuGet
         run: |

@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Version>10.0</Version>
-		<Authors>Steven Kamwaza</Authors>
+		<Version>10.0.13</Version>
+		<PackageVersion>10.0.13</PackageVersion>
+  		<Authors>Steven Kamwaza</Authors>
 		<PackageId>SK.ResultKit</PackageId>
 		<Title>ResultKit</Title>
 		<Description>
